@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^saveProfile/$', views.saveProfile, name='saveProfile'),
     url(r'^forgotPwd/$', views.forgotPwd, name='forgotPwd'),
     url(r'^profile/(?P<pk>\w+)/$', views.profile, name='profile'),
     url(r'^addSubreddit/(?P<pk>\w+)/$', views.addSubreddit, name='addSubreddit'),

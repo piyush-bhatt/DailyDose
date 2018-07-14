@@ -116,8 +116,6 @@ def display(request, pk, sub):
             data = scrape.scrape_gnews(sub)
             context = {'data': data}
             return render(request, 'scraper/display_gnews.html', context)
-        else:
-            return redirect("/scraper/profile/wolf")
     except:
         messages.error(request, 'Unable to display')
         return redirect("/scraper/")
@@ -137,6 +135,19 @@ def profile(request, pk):
         return redirect("/scraper/")
 
 
+def saveProfile(request):
+    username = request.POST.get('username')
+    try:
+        user = User.objects.get(username=username)
+        user.first_name = request.POST.get('firstName')
+        user.last_name = request.POST.get('lastName')
+        user.save()
+    except:
+        messages.error(request, 'Something went wrong.')
+        return redirect("/scraper/")
+    return redirect("/scraper/profile/" + user.username)
+
+
 def addSubreddit(request, pk):
     user = User.objects.get(username=pk)
     try:
@@ -144,9 +155,6 @@ def addSubreddit(request, pk):
         subreddit = Subreddits.objects.create(subreddit_name=subreddit_name, user=user)
         if subreddit is not None:
             subreddit.save()
-            messages.success(request, 'Subreddit successfully added')
-        else:
-            messages.error(request, 'Unable to add subreddit')
     except:
         messages.error(request, 'Something went wrong. Please add again')
     finally:
@@ -157,7 +165,6 @@ def deleteSubreddit(request, pk, sub):
     user = User.objects.get(username=pk)
     try:
         Subreddits.objects.filter(user=user).filter(subreddit_name=sub).delete()
-        messages.success(request, 'Subreddit successfully removed')
     except:
         messages.error(request, 'Something went wrong. Please add again')
     finally:
