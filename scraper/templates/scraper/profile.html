@@ -1,0 +1,84 @@
+{% extends 'scraper/base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-8">
+            <div class="card card-inverse" style="background-color: #d5dbdb; border-color: #808b96;
+            padding-top:20px; padding-left:20px;">
+                <form class="">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <label for="username"><strong>Username: </strong></label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <input type="text" id="username" name="username" value={{user.username}}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <label for="first_name"><strong>First Name: </strong></label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <input type="text" id="first_name" name="first_name" value={{user.first_name}}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <label for="last_name"><strong>Last Name: </strong></label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <input type="text" id="last_name" name="last_name" value={{user.last_name}}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <label for="email"><strong>Email Id: </strong></label>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <input type="text" id="email" name="email" disabled value={{user.email}}>
+                        </div>
+                    </div>
+                    <p><strong>Subreddits: </strong>
+                        {% for subreddit in subreddits %}
+                        <span class="badge bg-primary">
+                            {{subreddit.subreddit_name}}&nbsp;
+                            <a href="{% url 'scraper:deleteSubreddit' pk=user.username sub=subreddit.subreddit_name %}" style="color: inherit;">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </span>
+                        {% endfor %}
+                        <i class="fas fa-plus addSubreddit-modal" data-toggle="modal" data-target="#addSubredditForm"></i>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for add subreddit -->
+<div class="modal fade" id="addSubredditForm" tabindex="-1" role="dialog" aria-labelledby="addSubredditFormLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSubredditFormLabel" align="center">Add Subreddit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="px-4 py-3" action="{% url 'scraper:addSubreddit' pk=user.username %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="subreddit">Enter Subreddit to add</label>
+                            <input type="text" required class="form-control" name="subreddit" id="subreddit"
+                                   placeholder="Enter subreddit">
+                        </div>
+                        <button type="submit" class="btn btn-primary float-right">Add</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
