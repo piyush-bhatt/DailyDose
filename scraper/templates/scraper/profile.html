@@ -40,8 +40,12 @@
                             <input type="text" id="email" name="email" disabled value={{user.email}}>
                         </div>
                     </div>
-                    <p><strong>Subreddits: </strong>
-                        {% for subreddit in subreddits %}
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <p><strong>Subreddits: </strong></p>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            {% for subreddit in subreddits %}
                         <span class="badge bg-primary">
                             {{subreddit.subreddit_name}}&nbsp;
                             <a href="{% url 'scraper:deleteSubreddit' pk=user.username sub=subreddit.subreddit_name %}" style="color: inherit;">
@@ -50,7 +54,9 @@
                         </span>
                         {% endfor %}
                         <i class="fas fa-plus addSubreddit-modal" data-toggle="modal" data-target="#addSubredditForm"></i>
-                    </p>
+                        </div>
+                    </div>
+                    
                     <div style="padding-bottom: 20px;">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
