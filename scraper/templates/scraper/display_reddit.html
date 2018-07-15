@@ -6,10 +6,10 @@
         {% for key,value in data.items %}
             <div class="card bg-light mb-3" style="width: 15rem;">
                 <img class="card-img" src="{{value.2}}" alt="">
-                <div class="card-header"><a href="https://www.reddit.com/r/{{value.1}}" target="_blank">
-                    <small class="text-muted">{{value.1}}</small></a></div>
+                <div class="card-header"><a href="https://www.reddit.com{{value.1}}" target="_blank">
+                    <small class="text-muted">Join Discussion</small></a></div>
                 <div class="card-body">
-                    <a href="https://www.reddit.com/{{value.0}}" target="_blank"><h5 class="text-muted card-title">{{key}}</h5></a>
+                    <a href="{{value.0}}" target="_blank"><h5 class="text-muted card-title">{{key}}</h5></a>
                 </div>
             </div>
         {% endfor %}

@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 
 def scrape_reddit(subreddit_name):
     url = 'https://www.reddit.com/r/'+subreddit_name+'/.json'
@@ -12,8 +11,8 @@ def scrape_reddit(subreddit_name):
         for post in response.json()['data']['children']:
             key = post['data']['title']
             datakey.setdefault(key, [])
+            datakey[key].append(post['data']['url'])
             datakey[key].append(post['data']['permalink'])
-            datakey[key].append(post['data']['subreddit'])
             datakey[key].append(post['data']['thumbnail'])
     return datakey
 
